@@ -86,6 +86,9 @@ class User extends \Core\Model
         if ($this->email != $this->email2) {
             $this->errors['emailMatch'] = Constants::$emailsDoNotMatch;
         }
+        if (static::emailExists($this->email)) {
+            $this->errors['emailExists'] = Constants::$emailExists;
+        }
         
        // Password
         if (strlen($this->password) < 6) {
@@ -103,5 +106,29 @@ class User extends \Core\Model
         if ($this->password != $this->password2) {
             $this->errors['passwordMatch'] = Constants::$passwordsDoNoMatch;
         }
+    }
+
+    public static function findByEmail($email) 
+    {
+        $sql = 'SELECT * FROM users WHERE email = :email';
+
+        $db = static::getDb();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+
+    }
+
+    public static function emailExists($email) 
+    {
+        if (static::findByEmail($email)){
+            return true;
+        }
+        return false;
     }
 }

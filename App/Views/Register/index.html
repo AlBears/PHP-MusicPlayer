@@ -47,6 +47,7 @@
         <p>
             {% if user.errors['emailValidation'] %}<span class="errorMessage">{{ user.errors['emailValidation'] }}</span>{% endif %}
             {% if user.errors['emailMatch'] %}<span class="errorMessage">{{ user.errors['emailMatch'] }}</span>{% endif %}
+            {% if user.errors['emailExists'] %}<span class="errorMessage">{{ user.errors['emailExists'] }}</span>{% endif %}
             <label for="email">Email</label>
             <input id="email" name="email" type="email" placeholder="e.g. bart@gmail.com" value="{{ user.email }}" required>
         </p>
