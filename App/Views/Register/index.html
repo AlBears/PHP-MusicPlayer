@@ -5,7 +5,7 @@
 {% block body %}
 
 <div id="inputContainer">
-    <form id="loginForm" action="register.php" method="POST">
+    <form id="loginForm" action="/login/create" method="POST">
         <h2>Login to your account</h2>
         <p>
             <label for="loginUsername">Username</label>
@@ -28,6 +28,7 @@
         <p>  
             {% if user.errors['username'] %}<span class="errorMessage">{{ user.errors['username'] }}</span>{% endif %}
             {% if user.errors['usernameSpace'] %}<span class="errorMessage">{{ user.errors['usernameSpace'] }}</span>{% endif %}
+            {% if user.errors['usernameExists'] %}<span class="errorMessage">{{ user.errors['usernameExists'] }}</span>{% endif %}
             <label for="username">Username</label>
             <input id="username" name="username" type="text" placeholder="e.g. bartSimpson" value="{{ user.username | striptags }}" required>
         </p>

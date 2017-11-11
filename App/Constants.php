@@ -15,6 +15,7 @@ class Constants {
 	public static $usernameCharacters = "Your username must be between 5 and 25 characters";
 	public static $usernameSpace = "Username should consist of 1 word";
 	public static $emailExists = "This email is already taken";
+	public static $usernameExists = "This username is already taken";
 
 }
 ?>
