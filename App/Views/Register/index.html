@@ -8,8 +8,9 @@
     <form id="loginForm" action="/login/create" method="POST">
         <h2>Login to your account</h2>
         <p>
+            {% if error %}<span class="errorMessage">{{ error }}</span>{% endif %}
             <label for="loginUsername">Username</label>
-            <input id="loginUsername" name="loginUsername" type="text" placeholder="e.g. bartSimpson" required>
+            <input id="loginUsername" name="loginUsername" type="text" placeholder="e.g. bartSimpson" value = "{{ username }}" required>
         </p>
         <p>
             <label for="loginPassword">Password</label>

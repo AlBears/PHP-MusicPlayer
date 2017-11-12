@@ -16,6 +16,7 @@ class Constants {
 	public static $usernameSpace = "Username should consist of 1 word";
 	public static $emailExists = "This email is already taken";
 	public static $usernameExists = "This username is already taken";
+	public static $loginFailed = "Username or password are wrong";
 
 }
 ?>

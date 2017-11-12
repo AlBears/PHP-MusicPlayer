@@ -143,4 +143,17 @@ class User extends \Core\Model
         }
         return false;
     }
+
+    public static function authenticate($username, $password)
+    {
+        $user = static::findByField(['username' => $username]);
+
+        if ($user) {
+            if (md5($password) == $user->password) {
+                return $user;
+            }
+        }
+
+        return false;
+    }
 }
