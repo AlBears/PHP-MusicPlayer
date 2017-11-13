@@ -13,6 +13,7 @@ class Login extends \Core\Controller
         $user = User::authenticate($_POST['loginUsername'], $_POST['loginPassword']); 
         
         if ($user) {
+            $_SESSION['userLoggedIn'] = $user->username;
             $this->redirect('/');
         } else {
             View::renderTemplate('Register/index.html', [
