@@ -20,8 +20,9 @@ class Register extends \Core\Controller
             $this->redirect('/');
         } else {
             View::renderTemplate('Register/index.html', [
-                'user' => $user
+                'user' => $user,
             ]);
+
         };
     }
 }

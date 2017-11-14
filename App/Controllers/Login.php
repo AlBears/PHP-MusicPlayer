@@ -20,6 +20,7 @@ class Login extends \Core\Controller
                 'username' => $_POST['loginUsername'],
                 'error' => Constants::$loginFailed
             ]);
+
         };
     }
 }
