@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 use \Core\View;
+use \App\Models\Album;
 
 class Home extends \Core\Controller
 {
@@ -18,6 +19,9 @@ class Home extends \Core\Controller
 
     public function indexAction()
     {
-        View::renderTemplate('Home/index.html');
+        $albums = Album::getAll();
+        View::renderTemplate('Home/index.html', [
+            'albums' => $albums
+        ]);
     }
 }
