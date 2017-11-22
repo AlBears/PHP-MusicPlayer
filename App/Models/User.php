@@ -67,7 +67,7 @@ class User extends \Core\Model
         if ($this->username != str_replace(" ", "", $this->username)) {
             $this->errors['username'] = Constants::$usernameSpace;
         }
-        if (static::itemExists('users', ['username' => $this->username])) {
+        if (static::itemExists(static::getTable(), ['username' => $this->username])) {
             $this->errors['usernameExists'] = Constants::$usernameExists;
         }
 
@@ -89,7 +89,7 @@ class User extends \Core\Model
         if ($this->email != $this->email2) {
             $this->errors['emailMatch'] = Constants::$emailsDoNotMatch;
         }
-        if (static::itemExists('users', ['email' => $this->email])) {
+        if (static::itemExists(static::getTable(), ['email' => $this->email])) {
             $this->errors['emailExists'] = Constants::$emailExists;
         }
         
@@ -113,7 +113,7 @@ class User extends \Core\Model
 
     public static function authenticate($username, $password)
     {
-        $user = static::findByField('users', ['username' => $username]);
+        $user = static::findByField(static::getTable(), ['username' => $username]);
 
         if ($user) {
             if (md5($password) == $user->password) {

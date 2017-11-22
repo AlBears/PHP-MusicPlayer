@@ -53,4 +53,13 @@ abstract class Model
         return false;
     }
 
+    public static function getTable()
+    {
+        $className = get_called_class();
+
+        $table = strtolower(substr($className, strrpos($className, '\\') + 1))."s";
+        
+        return $table;
+    }
+
 }
