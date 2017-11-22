@@ -18,4 +18,5 @@ class Album extends \Core\Model
 
        return $results;
     }
+
 }

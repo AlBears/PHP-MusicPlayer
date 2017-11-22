@@ -1,10 +1,9 @@
-<div id="mainViewContainer">
-    <div id="mainContent">
+
         <h1 class="pageHeadingBig">You Might Also Like</h1>
         <div class="gridViewContainer">
             {% for album in albums %}
             <div class="gridViewItem">
-                <a href="">
+                <a href="/albums/show/{{ album.id }}">
                     <img src="{{ album.artworkPath }}" alt="">
                     <div class="gridViewInfo">
                         {{ album.title }}
@@ -13,5 +12,4 @@
             </div>
             {% endfor %}
         </div>
-    </div>
-</div>
+    

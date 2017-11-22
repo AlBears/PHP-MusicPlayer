@@ -67,7 +67,7 @@ class User extends \Core\Model
         if ($this->username != str_replace(" ", "", $this->username)) {
             $this->errors['username'] = Constants::$usernameSpace;
         }
-        if (static::itemExists(['username' => $this->username])) {
+        if (static::itemExists('users', ['username' => $this->username])) {
             $this->errors['usernameExists'] = Constants::$usernameExists;
         }
 
@@ -89,7 +89,7 @@ class User extends \Core\Model
         if ($this->email != $this->email2) {
             $this->errors['emailMatch'] = Constants::$emailsDoNotMatch;
         }
-        if (static::itemExists(['email' => $this->email])) {
+        if (static::itemExists('users', ['email' => $this->email])) {
             $this->errors['emailExists'] = Constants::$emailExists;
         }
         
@@ -111,42 +111,9 @@ class User extends \Core\Model
         }
     }
 
-    public static function findByField($data = array()) 
-    {
-        $stmt = static::sqlFieldStmt($data);
-
-        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
-
-        $stmt->execute();
-
-        return $stmt->fetch();
-
-    }
-
-    private static function sqlFieldStmt($data = array()) 
-    {
-        $field = array_keys($data)[0];
-        
-        $sql = 'SELECT * FROM users WHERE '.$field.' = :data';
-
-        $db = static::getDb();
-        $stmt = $db->prepare($sql);
-        $stmt->bindParam(':data', $data[$field], PDO::PARAM_STR);
-
-        return $stmt;
-    }
-
-    public static function itemExists($data = array()) 
-    {
-        if (static::findByField($data)){
-            return true;
-        }
-        return false;
-    }
-
     public static function authenticate($username, $password)
     {
-        $user = static::findByField(['username' => $username]);
+        $user = static::findByField('users', ['username' => $username]);
 
         if ($user) {
             if (md5($password) == $user->password) {

@@ -26,4 +26,31 @@ abstract class Model
 
         return $db;
     }
+
+    public static function findByField($table, $data = array()) 
+    {
+        $field = array_keys($data)[0];
+        
+        $sql = "SELECT * FROM {$table} WHERE {$field} = :data";
+
+        $db = static::getDb();
+        $stmt = $db->prepare($sql);
+        $stmt->bindParam(':data', $data[$field], PDO::PARAM_STR);
+
+        $stmt->setFetchMode(PDO::FETCH_CLASS, get_called_class());
+
+        $stmt->execute();
+
+        return $stmt->fetch();
+
+    }
+
+    public static function itemExists($table, $data = array()) 
+    {
+        if (static::findByField($table, $data)){
+            return true;
+        }
+        return false;
+    }
+
 }
