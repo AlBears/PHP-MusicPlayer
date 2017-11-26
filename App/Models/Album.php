@@ -8,6 +8,8 @@ use Core\View;
 
 class Album extends \Core\Model
 {
+    public $artist;
+
     public static function getAll()
     {
        $db = static::getDB();

@@ -27,9 +27,11 @@ abstract class Model
         return $db;
     }
 
-    public static function findByField($table, $data = array()) 
+    public static function findByField($data = array()) 
     {
         $field = array_keys($data)[0];
+
+        $table = static::getTable();
         
         $sql = "SELECT * FROM {$table} WHERE {$field} = :data";
 
@@ -45,9 +47,9 @@ abstract class Model
 
     }
 
-    public static function itemExists($table, $data = array()) 
+    public static function itemExists($data = array()) 
     {
-        if (static::findByField($table, $data)){
+        if (static::findByField($data)){
             return true;
         }
         return false;
