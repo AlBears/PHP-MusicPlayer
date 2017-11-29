@@ -9,7 +9,12 @@ use Core\DB;
 
 class Album extends \Core\Model
 {
-    private $artist;
+    private $artistId;
+
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
     public function getAll()
     {

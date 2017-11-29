@@ -26,7 +26,7 @@ class User extends \Core\Model
    */
     public function __construct($data = [])
     {
-        $this->db = new DB;
+        parent::__construct();
         foreach ($data as $key => $value) {
             $this->$key = $value;
         };
