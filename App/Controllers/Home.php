@@ -19,7 +19,8 @@ class Home extends \Core\Controller
 
     public function indexAction()
     {
-        $albums = Album::getAll();
+        $album = new Album();
+        $albums = $album->getAll();
         View::renderTemplate('Home/index.html', [
             'albums' => $albums
         ]);

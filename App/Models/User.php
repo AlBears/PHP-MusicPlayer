@@ -5,6 +5,7 @@ namespace App\Models;
 use PDO;
 use \App\Constants;
 use Core\View;
+use Core\DB;
 
 /**
  * Example user model
@@ -25,6 +26,7 @@ class User extends \Core\Model
    */
     public function __construct($data = [])
     {
+        $this->db = new DB;
         foreach ($data as $key => $value) {
             $this->$key = $value;
         };
@@ -38,21 +40,18 @@ class User extends \Core\Model
 
             $profilePic = "public/img/profile-pics/head-emerald.png";
 
-            $sql = 'INSERT INTO users (username, firstName, lastName, email, password, signUpDate, profilePic)
-                 VALUES (:username, :firstName, :lastName, :email, :password, :signUpDate, :profilePic)';
+            $this->db->query('INSERT INTO users (username, firstName, lastName, email, password, signUpDate, profilePic)
+                 VALUES (:username, :firstName, :lastName, :email, :password, :signUpDate, :profilePic)');
 
-            $db = static::getDB();
-            $stmt = $db->prepare($sql);
+            $this->db->bind(':username', $this->username);
+            $this->db->bind(':firstName', $this->firstName);
+            $this->db->bind(':lastName', $this->lastName);
+            $this->db->bind(':email', ucfirst(strtolower($this->email)));
+            $this->db->bind(':password', md5($this->password));
+            $this->db->bind(':signUpDate', date("Y-m-d"));
+            $this->db->bind(':profilePic', $profilePic);
 
-            $stmt->bindValue(':username', $this->username, PDO::PARAM_STR);
-            $stmt->bindValue(':firstName', $this->firstName, PDO::PARAM_STR);
-            $stmt->bindValue(':lastName', $this->lastName, PDO::PARAM_STR);
-            $stmt->bindValue(':email', ucfirst(strtolower($this->email)), PDO::PARAM_STR);
-            $stmt->bindValue(':password', md5($this->password), PDO::PARAM_STR);
-            $stmt->bindValue(':signUpDate', date("Y-m-d"), PDO::PARAM_STR);
-            $stmt->bindValue(':profilePic', $profilePic, PDO::PARAM_STR);
-
-            return $stmt->execute();
+            return $this->db->execute();
         }
 
         return false;
@@ -67,7 +66,7 @@ class User extends \Core\Model
         if ($this->username != str_replace(" ", "", $this->username)) {
             $this->errors['username'] = Constants::$usernameSpace;
         }
-        if (static::itemExists(static::getTable(), ['username' => $this->username])) {
+        if ($this->itemExists(['username' => $this->username])) {
             $this->errors['usernameExists'] = Constants::$usernameExists;
         }
 
@@ -89,7 +88,7 @@ class User extends \Core\Model
         if ($this->email != $this->email2) {
             $this->errors['emailMatch'] = Constants::$emailsDoNotMatch;
         }
-        if (static::itemExists(static::getTable(), ['email' => $this->email])) {
+        if ($this->itemExists(['email' => $this->email])) {
             $this->errors['emailExists'] = Constants::$emailExists;
         }
         
@@ -111,9 +110,9 @@ class User extends \Core\Model
         }
     }
 
-    public static function authenticate($username, $password)
+    public function authenticate($username, $password)
     {
-        $user = static::findByField(static::getTable(), ['username' => $username]);
+        $user = $this->findByField(['username' => $username]);
 
         if ($user) {
             if (md5($password) == $user->password) {

@@ -5,18 +5,18 @@ namespace App\Models;
 use PDO;
 use \App\Constants;
 use Core\View;
+use Core\DB;
 
 class Album extends \Core\Model
 {
     public $artist;
 
-    public static function getAll()
+    public function getAll()
     {
-       $db = static::getDB();
+    
+       $this->db->query('SELECT * FROM albums');
 
-       $stmt = $db->query('SELECT * FROM albums');
-
-       $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+       $results = $this->db->resultset();
 
        return $results;
     }
