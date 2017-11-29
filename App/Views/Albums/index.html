@@ -2,8 +2,23 @@
 
 {% block content %}
 
-{{ album.title }}
-{{ artist.name }}
+<div class="entityInfo">
+    
+        <div class="leftSection">
+            <img src="{{ album.artworkPath }}">
+        </div>
+    
+        <div class="rightSection">
+            <h2>{{ album.title }}</h2>
+            <p>{{ artist.name }}</p>
+            <p>4</p>
+    
+        </div>
+    
+    </div>
+
+
+
     
 
 {% endblock %}

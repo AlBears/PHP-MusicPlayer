@@ -9,7 +9,7 @@ use Core\DB;
 
 class Album extends \Core\Model
 {
-    public $artist;
+    private $artist;
 
     public function getAll()
     {
