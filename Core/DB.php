@@ -68,6 +68,12 @@ class DB {
 		return $this->stmt->fetchAll(PDO::FETCH_OBJ);
 	}
 
+	public function resultSetArray()
+	{
+		$this->execute();
+		return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
+	}
+
 	public function lastInsertId()
 	{
 		return $this->dbh->lastInsertId();

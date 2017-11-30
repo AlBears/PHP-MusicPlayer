@@ -46,4 +46,22 @@ class Album extends \Core\Model
     { 
         return new Artist($this->artistId);
     }
+
+    public function getSongsId()
+    {
+        $this->db->query("SELECT id FROM songs WHERE album=:album ORDER BY albumOrder ASC");
+        $this->db->bind(':album', $this->id);
+        $data = $this->db->resultSet();
+        $array = array();
+        foreach($data as $x => $obj) {
+            $song = new Song($obj->id);
+            $obj->name = $song->getTitle();
+            $obj->artist = $song->getArtist()->getName();
+            $obj->duration = $song->getDuration();
+            $obj->key = $x+1;
+            array_push($array, $obj);
+        }
+        return $array;
+
+    }
 }

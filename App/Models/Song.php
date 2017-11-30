@@ -35,4 +35,17 @@ class Song extends \Core\Model
         $this->path = $song->path;
     }
 
+    public function getTitle() {
+        return $this->title;
+    }
+
+    public function getArtist() {
+        return new Artist($this->artistId);
+    }
+
+    public function getDuration() {
+        return $this->duration;
+    }
+
+
 }
