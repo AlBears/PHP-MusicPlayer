@@ -9,16 +9,30 @@ use Core\DB;
 
 class Song extends \Core\Model
 {
+    private $id;
+    private $title;
+    private $artistId;
+    private $albumId;
+    private $genre;
+    private $duration;
+    private $path;
 
-    public function getNumberOfSongs($id)
+    public function __construct($id)
     {
-    
-       $this->db->query('SELECT id FROM songs WHERE album = :album');
+        parent::__construct();
 
-       $this->db->bind(':album', $id);
+        $this->id = $id;
 
-       return  count($this->db->resultset());
+        $this->db->query('SELECT * FROM songs WHERE id = :id');
+        $this->db->bind(':id', $this->id);
+        $song = $this->db->single();
 
+        $this->title = $song->title;
+        $this->artistId = $song->artist;
+        $this->albumId = $song->album;
+        $this->genre = $song->genre;
+        $this->duration = $song->duration;
+        $this->path = $song->path;
     }
 
 }

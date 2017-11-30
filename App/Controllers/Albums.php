@@ -5,23 +5,21 @@ use \Core\View;
 use \App\Models\Album;
 use \App\Models\Artist;
 use \App\Models\Song;
+Use \App\Query;
 
 class Albums extends \Core\Controller
 {
 
     public function showAction()
     {
-        $albumInstance = new Album;
-        $album = $albumInstance->findByField(['id' => $this->route_params['id']]);
-        $artistInstance = new Artist;
-        $artist = $artistInstance->findByField(['id' => $album->artist ]);
-        $songInstance = new Song;
-        $number = $songInstance->getNumberOfSongs($this->route_params['id']);
+        $album = new Album($this->route_params['id']);
+        $query = new Query;
         
         View::renderTemplate('Albums/index.html', [
-            'album' => $album,
-            'artist' => $artist,
-            'number' => $number
+            'albumTitle' => $album->getTitle(),
+            'artist' => $album->getArtist()->getName(),
+            'number' => $query->getNumberOfSongs($this->route_params['id']),
+            'artwork' => $album->getArtworkPath()
         ]);
     }
 
