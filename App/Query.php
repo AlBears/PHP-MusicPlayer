@@ -33,4 +33,15 @@ class Query
 
     }
 
+    public function getSongsIds()
+    {
+    
+       $this->db->query('SELECT id FROM songs ORDER BY RAND() LIMIT 10');
+
+       $result = $this->db->resultset();
+
+       return json_encode($result);
+
+    }
+
 }

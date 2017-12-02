@@ -22,8 +22,10 @@ class Home extends \Core\Controller
     {
         $query = new Query();
         $albums = $query->getAll("albums");
+        $ids = $query->getSongsIds();
         View::renderTemplate('Home/index.html', [
-            'albums' => $albums
+            'albums' => $albums,
+            'ids' => $ids
         ]);
     }
 }

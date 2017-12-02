@@ -13,7 +13,6 @@ class Albums extends \Core\Controller
     public function showAction()
     {
         $album = new Album($this->route_params['id']);
-        var_dump($album->getSongsId());
         $query = new Query;
         
         View::renderTemplate('Albums/index.html', [
