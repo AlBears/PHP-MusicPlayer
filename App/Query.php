@@ -59,4 +59,14 @@ class Query
         return $this->db->single();
 
     }
+
+    public function getAlbumById($id)
+    {
+        $this->db->query('SELECT * FROM albums WHERE id = :id');
+
+        $this->db->bind(':id', $id);
+
+        return $this->db->single();
+
+    }
 }

@@ -8,16 +8,28 @@ $(document).ready(function () {
 
 function setTrack(trackId, newPlaylist, play) {
 
-    $.post('/ajax/findSong', { songId: trackId }, function(data){
+    $.post('/ajax/findSong', {
+        songId: trackId
+    }, function (data) {
 
         var track = JSON.parse(data);
         $('.trackName span').text(track.title);
         console.log(track);
 
-        $.post('/ajax/findArtist', { artistId: track.artist }, function(data){
-    
+        $.post('/ajax/findArtist', {
+            artistId: track.artist
+        }, function (data) {
+
             var artist = JSON.parse(data);
             $('.artistName span').text(artist.name);
+        });
+
+        $.post('/ajax/findAlbum', {
+            albumId: track.album
+        }, function (data) {
+
+            var album = JSON.parse(data);
+            $('.albumLink img').attr("src", album.artworkPath);
         });
 
         audioElement.setTrack(track.path);

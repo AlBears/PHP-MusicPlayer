@@ -20,4 +20,11 @@ class Ajax extends \Core\Controller
         echo json_encode($artist);
     }
 
+    public function findAlbumAction()
+    {
+        $query = new Query;
+        $album = $query->getAlbumById($_POST['albumId']);
+        echo json_encode($album);
+    }
+
 }
