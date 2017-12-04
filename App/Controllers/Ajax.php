@@ -27,4 +27,10 @@ class Ajax extends \Core\Controller
         echo json_encode($album);
     }
 
+    public function updateCountAction()
+    {
+        $query = new Query;
+        $query->incrementPlays($_POST['songId']);
+    }
+
 }

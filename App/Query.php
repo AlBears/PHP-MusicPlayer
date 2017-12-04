@@ -69,4 +69,16 @@ class Query
         return $this->db->single();
 
     }
+
+    public function incrementPlays($id)
+    {
+        $this->db->query('UPDATE songs SET plays = plays + 1 WHERE id = :id');
+
+        $this->db->bind(':id', $id);
+
+        $this->db->execute();
+
+    }
+
+
 }

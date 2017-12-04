@@ -32,7 +32,8 @@ function setTrack(trackId, newPlaylist, play) {
             $('.albumLink img').attr("src", album.artworkPath);
         });
 
-        audioElement.setTrack(track.path);
+        audioElement.setTrack(track);
+        playSong();
 
     });
 
@@ -43,6 +44,13 @@ function setTrack(trackId, newPlaylist, play) {
 }
 
 function playSong() {
+    console.log(audioElement);
+    if(audioElement.audio.currentTime == 0) {
+        $.post('/ajax/updateCount', {
+            songId: audioElement.currentlyPlaying.id 
+        });
+    } 
+    
     $('.controlButton.play').hide();
     $('.controlButton.pause').show();
     audioElement.play();
