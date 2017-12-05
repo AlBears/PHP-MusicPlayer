@@ -60,6 +60,11 @@ function timeFromOffset(mouse, progressBar) {
 }
 
 function nextSong() {
+    if (repeat == true) {
+        audioElement.setTime(0);
+        playSong();
+        return;
+    }
     if(currentIndex == currentPlaylist.length - 1) {
         currentIndex = 0
     } else {
@@ -68,6 +73,12 @@ function nextSong() {
 
     var trackToPlay = currentPlaylist[currentIndex].id;
     setTrack(trackToPlay, currentPlaylist, true);
+}
+
+function setRepeat() {
+    repeat = !repeat;
+    var imageName = repeat ? "repeat-active.png" : "repeat.png";
+    $(".controlButton.repeat img").attr("src", "/img/icons/" + imageName);
 }
 
 function setTrack(trackId, newPlaylist, play) {
@@ -81,6 +92,8 @@ function setTrack(trackId, newPlaylist, play) {
     currentIndex = currentPlaylist.indexOfObject({
         id: trackId
     });
+
+    pauseSong();
 
     $.post('/ajax/findSong', {
         songId: trackId
