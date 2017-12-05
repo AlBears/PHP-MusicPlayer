@@ -1,6 +1,7 @@
 var currentPlaylist = [],
     audioElement,
-    mouseDown = false;
+    mouseDown = false,
+    currentIndex = 0;
 
 function formatTime(seconds) {
     var time, minutes, seconds, extraZero;
