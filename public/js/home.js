@@ -5,6 +5,10 @@ $(document).ready(function () {
     setTrack(currentPlaylist[0].id, currentPlaylist, false);
     updateVolumeProgressBar(audioElement.audio);
 
+    $("#nowPlayingBarContainer").on("mousedown touchstart mousemove touchmove", function(e){
+        e.preventDefault();
+    })
+
     $(".playbackBar .progressBar").mousedown(function() {
         mouseDown = true;
     });
