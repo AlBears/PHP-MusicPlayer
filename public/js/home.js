@@ -4,7 +4,32 @@ $(document).ready(function () {
     audioElement = new Audio();
     setTrack(currentPlaylist[0].id, currentPlaylist, false);
 
+    $(".playbackBar .progressBar").mousedown(function() {
+        mouseDown = true;
+    });
+
+    $(".playbackBar .progressBar").mousemove(function(e) {
+        if (mouseDown == true) {
+            timeFromOffset(e, this);
+        }
+    });
+
+    $(".playbackBar .progressBar").mouseup(function(e) {
+        timeFromOffset(e, this);
+    });
+
+    $(document).mouseup(function() {
+        mouseDown = false;
+    })
+
 });
+
+function timeFromOffset(mouse, progressBar) {
+    var percentage, seconds;
+        percentage = mouse.offsetX / $(progressBar).width() * 100;
+        seconds = audioElement.audio.duration * (percentage / 100);
+        audioElement.setTime(seconds);
+}
 
 function setTrack(trackId, newPlaylist, play) {
 
