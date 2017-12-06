@@ -59,6 +59,15 @@ function timeFromOffset(mouse, progressBar) {
     audioElement.setTime(seconds);
 }
 
+function prevSong() {
+    if (audioElement.audio.currentTime >= 3 || currentIndex == 0) {
+        audioElement.setTime(0);
+    } else {
+        currentIndex = currentIndex - 1;
+        setTrack(currentPlaylist[currentIndex].id, currentPlaylist, true);
+    }
+}
+
 function nextSong() {
     if (repeat == true) {
         audioElement.setTime(0);
