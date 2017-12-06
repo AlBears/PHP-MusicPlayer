@@ -1,8 +1,8 @@
 $(document).ready(function () {
 
-    currentPlaylist = $('.info').data('ids');
+    var newPlaylist = $('.info').data('ids');
     audioElement = new Audio();
-    setTrack(currentPlaylist[0].id, currentPlaylist, false);
+    setTrack(newPlaylist[0].id, newPlaylist, false);
     updateVolumeProgressBar(audioElement.audio);
 
     $("#nowPlayingBarContainer").on("mousedown touchstart mousemove touchmove", function (e) {
@@ -80,7 +80,7 @@ function nextSong() {
         currentIndex++;
     }
 
-    var trackToPlay = currentPlaylist[currentIndex].id;
+    var trackToPlay = shuffle ? shufflePlaylist[currentIndex].id : currentPlaylist[currentIndex].id;
     setTrack(trackToPlay, currentPlaylist, true);
 }
 
@@ -96,17 +96,55 @@ function setMute() {
     $(".controlButton.volume img").attr("src", "/img/icons/" + imageName);
 }
 
+Array.prototype.indexOfObject = function (object) {
+    for (var i = 0; i < this.length; i++) {
+        if (JSON.stringify(this[i]) === JSON.stringify(object))
+            return i;
+    }
+}
+
+function setShuffle() {
+    shuffle = !shuffle;
+    var imageName = shuffle ? "shuffle-active.png" : "shuffle.png";
+    $(".controlButton.shuffle img").attr("src", "/img/icons/" + imageName);
+
+    if(shuffle == true) {
+        //Randomize playlist
+        shuffleArray(shufflePlaylist);
+        currentIndex = shufflePlaylist.indexOfObject({id: audioElement.currentlyPlaying.id});
+
+    } else {
+        currentIndex = currentPlaylist.indexOfObject({id: audioElement.currentlyPlaying.id});
+    }
+}
+
+function shuffleArray(a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+        j = Math.floor(Math.random() * (i + 1));
+        x = a[i];
+        a[i] = a[j];
+        a[j] = x;
+    }
+}
+
 function setTrack(trackId, newPlaylist, play) {
 
-    Array.prototype.indexOfObject = function (object) {
-        for (var i = 0; i < this.length; i++) {
-            if (JSON.stringify(this[i]) === JSON.stringify(object))
-                return i;
-        }
+    if(newPlaylist != currentPlaylist) {
+        currentPlaylist = newPlaylist;
+        shufflePlaylist = currentPlaylist.slice();
+        shuffleArray(shufflePlaylist);
     }
-    currentIndex = currentPlaylist.indexOfObject({
-        id: trackId
-    });
+
+    if(shuffle == true) {
+        currentIndex = shufflePlaylist.indexOfObject({
+            id: trackId
+        });
+    } else {
+        currentIndex = currentPlaylist.indexOfObject({
+            id: trackId
+        });
+    }
 
     pauseSong();
 
