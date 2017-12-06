@@ -1,5 +1,6 @@
 var currentPlaylist = [],
     shufflePlaylist = [],
+    tempPlaylist = [],
     audioElement,
     mouseDown = false,
     currentIndex = 0,

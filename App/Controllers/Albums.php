@@ -14,14 +14,13 @@ class Albums extends \Core\Controller
     {
         $album = new Album($this->route_params['id']);
         $query = new Query;
-        
         View::renderTemplate('Albums/index.html', [
             'albumTitle' => $album->getTitle(),
             'artist' => $album->getArtist()->getName(),
             'number' => $query->getNumberOfSongs($this->route_params['id']),
             'artwork' => $album->getArtworkPath(),
             'songs' => $album->getSongsId(),
-            'ids' => $query->getSongsIds()
+            'ids' => $album->getAlbumSongsIds()
         ]);
     }
 

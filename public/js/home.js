@@ -46,6 +46,10 @@ $(document).ready(function () {
         }
     });
 
+    $(".tracklistRow .trackCount img").click(function(){
+        setTrack($(this).data("songid"), newPlaylist, true);
+    })
+
     $(document).mouseup(function () {
         mouseDown = false;
     })

@@ -64,4 +64,15 @@ class Album extends \Core\Model
         return $array;
 
     }
+
+    public function getAlbumSongsIds()
+    {
+        $this->db->query('SELECT id FROM songs WHERE album = :album');
+
+        $this->db->bind(':album', $this->id);
+
+        $result = $this->db->resultset();
+
+        return json_encode($result);
+    }
 }

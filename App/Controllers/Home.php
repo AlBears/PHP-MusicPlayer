@@ -21,11 +21,9 @@ class Home extends \Core\Controller
     public function indexAction()
     {
         $query = new Query();
-        $albums = $query->getAll("albums");
-        $ids = $query->getSongsIds();
         View::renderTemplate('Home/index.html', [
-            'albums' => $albums,
-            'ids' => $ids
+            'albums' => $query->getAll("albums"),
+            'ids' => $query->getSongsIds()
         ]);
     }
 }
