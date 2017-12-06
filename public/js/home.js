@@ -90,6 +90,12 @@ function setRepeat() {
     $(".controlButton.repeat img").attr("src", "/img/icons/" + imageName);
 }
 
+function setMute() {
+    audioElement.audio.muted = !audioElement.audio.muted;
+    var imageName = audioElement.audio.muted ? "volume-mute.png" : "volume.png";
+    $(".controlButton.volume img").attr("src", "/img/icons/" + imageName);
+}
+
 function setTrack(trackId, newPlaylist, play) {
 
     Array.prototype.indexOfObject = function (object) {
