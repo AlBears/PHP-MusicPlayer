@@ -47,12 +47,13 @@ $(document).ready(function () {
     });
 
     $(".tracklistRow .trackCount img").click(function(){
-        setTrack($(this).data("songid"), newPlaylist, true);
+        var id = $(this).data("songid");
+        setTrack(id, newPlaylist, true);
     })
 
     $(document).mouseup(function () {
         mouseDown = false;
-    })
+    });
 
 });
 
@@ -73,6 +74,7 @@ function prevSong() {
 }
 
 function nextSong() {
+    
     if (repeat == true) {
         audioElement.setTime(0);
         playSong();
@@ -142,11 +144,11 @@ function setTrack(trackId, newPlaylist, play) {
 
     if(shuffle == true) {
         currentIndex = shufflePlaylist.indexOfObject({
-            id: trackId
+            id: (trackId).toString()
         });
     } else {
         currentIndex = currentPlaylist.indexOfObject({
-            id: trackId
+            id: (trackId).toString()
         });
     }
 
