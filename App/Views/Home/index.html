@@ -2,7 +2,15 @@
 
 {% block content %}
 
-       {% include '/home/mainContent.html' %}
+    {% if albums %}
+
+        {% include '/home/mainContent.html' %}
+
+    {% else %}
+
+       {% include '/albums/mainContentAlbums.html' %}
+
+    {% endif %}
 
 
 {% endblock %}

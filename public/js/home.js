@@ -46,13 +46,29 @@ $(document).ready(function () {
         }
     });
 
-    $(".tracklistRow .trackCount img").click(function(){
-        var id = $(this).data("songid");
-        setTrack(id, newPlaylist, true);
-    })
-
     $(document).mouseup(function () {
         mouseDown = false;
+    });
+
+    $(document).on('click', '.logo img', function(e){
+        e.preventDefault();
+        $("#mainContent").empty().load("/home/index");
+        
+    });
+
+    $(document).on('click', '.gridViewItem .gridViewInfo', function(e){
+        e.preventDefault();
+        loadAlbum.call($(this));
+    });
+
+    $(document).on('click', '.gridViewItem img', function(e){
+        e.preventDefault();
+        loadAlbum.call($(this));
+    });
+
+    $(document).on('click', ".tracklistRow .trackCount img", function(){
+        var id = $(this).data("songid");
+        setTrack(id, newPlaylist, true);
     });
 
 });
@@ -101,6 +117,11 @@ function setMute() {
     var imageName = audioElement.audio.muted ? "volume-mute.png" : "volume.png";
     $(".controlButton.volume img").attr("src", "/img/icons/" + imageName);
 }
+
+function loadAlbum (){
+    var id = ($(this).parent().attr('href')).slice(1).split('/')[2];
+    $("#mainContent").empty().load('/albums/show/'+ id);  
+};
 
 Array.prototype.indexOfObject = function (object) {
     for (var i = 0; i < this.length; i++) {

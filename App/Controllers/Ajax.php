@@ -33,4 +33,5 @@ class Ajax extends \Core\Controller
         $query->incrementPlays($_POST['songId']);
     }
 
+
 }

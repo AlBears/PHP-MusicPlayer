@@ -14,7 +14,14 @@ class Albums extends \Core\Controller
     {
         $album = new Album($this->route_params['id']);
         $query = new Query;
-        View::renderTemplate('Albums/index.html', [
+
+        if (isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
+            $url = 'Albums/mainContentAlbums.html';
+        } else {
+            $url = '/Albums/index.html';
+        }
+        
+        View::renderTemplate($url, [
             'albumTitle' => $album->getTitle(),
             'artist' => $album->getArtist()->getName(),
             'number' => $query->getNumberOfSongs($this->route_params['id']),
