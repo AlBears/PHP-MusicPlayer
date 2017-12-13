@@ -68,7 +68,7 @@ $(document).ready(function () {
 
     $(document).on('click', ".tracklistRow .trackCount img", function(){
         var id = $(this).data("songid");
-        setTrack(id, newPlaylist, true);
+        setTrack(id, tempPlaylist, true);
     });
 
 });
@@ -96,6 +96,7 @@ function nextSong() {
         playSong();
         return;
     }
+
     if(currentIndex == currentPlaylist.length - 1) {
         currentIndex = 0
     } else {
@@ -120,7 +121,9 @@ function setMute() {
 
 function loadAlbum (){
     var id = ($(this).parent().attr('href')).slice(1).split('/')[2];
-    $("#mainContent").empty().load('/albums/show/'+ id);  
+    $("#mainContent").empty().load('/albums/show/'+ id, function(){
+        tempPlaylist = $('.infoAlbum').data('idsalbum');
+    });  
 };
 
 Array.prototype.indexOfObject = function (object) {

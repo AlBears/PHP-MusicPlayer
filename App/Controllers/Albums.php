@@ -27,7 +27,7 @@ class Albums extends \Core\Controller
             'number' => $query->getNumberOfSongs($this->route_params['id']),
             'artwork' => $album->getArtworkPath(),
             'songs' => $album->getSongsId(),
-            'ids' => $album->getAlbumSongsIds()
+            'idsAlbum' => $album->getAlbumSongsIds()
         ]);
     }
 
