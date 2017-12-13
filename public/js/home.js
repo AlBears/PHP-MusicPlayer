@@ -194,8 +194,8 @@ function setTrack(trackId, newPlaylist, play) {
         }, function (data) {
 
             var artist = JSON.parse(data);
-            $('.artistName span').text(artist.name);
-            $('.artistName span').on("click", function(){
+            $('.artistName span').empty().text(artist.name);
+            $('.artistName span').one("click", function(){
                 $("#mainContent").empty().load('/artists/show/'+ artist.id, function(){
                     history.pushState(null, null, '/artists/show/'+ artist.id);
                 });
