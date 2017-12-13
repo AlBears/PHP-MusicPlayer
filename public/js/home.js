@@ -52,7 +52,9 @@ $(document).ready(function () {
 
     $(document).on('click', '.logo img', function(e){
         e.preventDefault();
-        $("#mainContent").empty().load("/home/index");
+        $("#mainContent").empty().load("/home/index", function() {
+            history.pushState(null, null, '/');
+        });
         
     });
 
@@ -123,6 +125,7 @@ function loadAlbum (){
     var id = ($(this).parent().attr('href')).slice(1).split('/')[2];
     $("#mainContent").empty().load('/albums/show/'+ id, function(){
         tempPlaylist = $('.infoAlbum').data('idsalbum');
+        history.pushState(null, null, '/albums/show/'+ id);
     });  
 };
 
@@ -192,6 +195,11 @@ function setTrack(trackId, newPlaylist, play) {
 
             var artist = JSON.parse(data);
             $('.artistName span').text(artist.name);
+            $('.artistName span').on("click", function(){
+                $("#mainContent").empty().load('/artists/show/'+ artist.id, function(){
+                    history.pushState(null, null, '/artists/show/'+ artist.id);
+                });
+            });
         });
 
         $.post('/ajax/findAlbum', {
@@ -203,13 +211,12 @@ function setTrack(trackId, newPlaylist, play) {
         });
 
         audioElement.setTrack(track);
-        playSong();
 
-    });
+        if (play) {
+            playSong();
+        } 
 
-    if (play) {
-        audioElement.play();
-    }
+    });  
 
 }
 
