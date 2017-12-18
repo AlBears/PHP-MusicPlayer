@@ -1,6 +1,7 @@
 $(document).ready(function () {
 
     var newPlaylist = $('.info').data('ids');
+    tempPlaylist = $('.infoAlbum').data('idsalbum');
     audioElement = new Audio();
     setTrack(newPlaylist[0].id, newPlaylist, false);
     updateVolumeProgressBar(audioElement.audio);
@@ -123,8 +124,9 @@ function setMute() {
 
 function loadAlbum (){
     var id = ($(this).parent().attr('href')).slice(1).split('/')[2];
-    $("#mainContent").empty().load('/albums/show/'+ id, function(){
+    $("#mainContent").load('/albums/show/'+ id, function(){
         tempPlaylist = $('.infoAlbum').data('idsalbum');
+        console.log(tempPlaylist);
         history.pushState(null, null, '/albums/show/'+ id);
     });  
 };
@@ -187,16 +189,16 @@ function setTrack(trackId, newPlaylist, play) {
 
         var track = JSON.parse(data);
         $('.trackName span').text(track.title);
-        console.log(track);
 
         $.post('/ajax/findArtist', {
             artistId: track.artist
         }, function (data) {
 
+
             var artist = JSON.parse(data);
-            $('.artistName span').empty().text(artist.name);
+            $('.artistName span').text(artist.name);
             $('.artistName span').one("click", function(){
-                $("#mainContent").empty().load('/artists/show/'+ artist.id, function(){
+                $("#mainContent").load('/artists/show/'+ artist.id, function(){
                     history.pushState(null, null, '/artists/show/'+ artist.id);
                 });
             });

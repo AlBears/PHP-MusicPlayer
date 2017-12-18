@@ -67,7 +67,7 @@ class Album extends \Core\Model
 
     public function getAlbumSongsIds()
     {
-        $this->db->query('SELECT id FROM songs WHERE album = :album');
+        $this->db->query('SELECT id FROM songs WHERE album = :album ORDER BY albumOrder ASC');
 
         $this->db->bind(':album', $this->id);
 
