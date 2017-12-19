@@ -31,13 +31,11 @@ class Query
         return  count($this->db->resultset());
     }
 
-    public function getSongsIds()
+    public function getRandomSongsIds()
     {
         $this->db->query('SELECT id FROM songs ORDER BY RAND() LIMIT 10');
 
-        $result = $this->db->resultset();
-
-        return json_encode($result);
+        return json_encode($this->db->resultset());
     }
 
     public function getSongById($id)
@@ -78,6 +76,26 @@ class Query
 
         $this->db->execute();
 
+    }
+
+    public function getAlbumSongs($id) 
+    {
+
+        $this->db->query('SELECT id FROM songs WHERE album = :album ORDER BY albumOrder ASC');
+
+        $this->db->bind(':album', $id);
+
+        return $this->db->resultset();
+    }
+
+    public function getArtistSongs($id) 
+    {
+
+        $this->db->query('SELECT id FROM songs WHERE artist = :artist ORDER BY plays ASC');
+
+        $this->db->bind(':artist', $id);
+
+        return $this->db->resultset();
     }
 
 

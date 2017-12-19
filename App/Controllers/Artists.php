@@ -24,7 +24,8 @@ class Artists extends \Core\Controller
         View::renderTemplate($url, [
     
             'artist' => $artist->getName(),
-            'ids' => $query->getSongsIds()
+            'ids' => $query->getRandomSongsIds(),
+            'songs' => $artist->getSongsInfo(),
         
         ]);
     }

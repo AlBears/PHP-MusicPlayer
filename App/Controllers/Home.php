@@ -19,7 +19,7 @@ class Home extends \Core\Controller
         }
         View::renderTemplate($url, [
                 'albums' => $query->getAll("albums"),
-                'ids' => $query->getSongsIds()
+                'ids' => $query->getRandomSongsIds()
             ]);
     }
 }

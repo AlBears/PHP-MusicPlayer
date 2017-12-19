@@ -3,7 +3,11 @@
 namespace App\Models;
 
 use PDO;
+use \App\Constants;
 use Core\View;
+use Core\DB;
+use \App\Query;
+
 
 class Artist extends \Core\Model
 {
@@ -26,5 +30,23 @@ class Artist extends \Core\Model
     public function getName()
     {
         return $this->name;
+    }
+
+    public function getSongsInfo()
+    {
+        $query = new Query;
+        $data = $query->getArtistSongs($this->id);
+
+        $array = array();
+        foreach($data as $x => $obj) {
+            $song = new Song($obj->id);
+            $obj->name = $song->getTitle();
+            $obj->artist = $song->getArtist()->getName();
+            $obj->duration = $song->getDuration();
+            $obj->key = $x+1;
+            array_push($array, $obj);
+        }
+        return $array;
+
     }
 }

@@ -7,6 +7,7 @@ use \App\Constants;
 use Core\View;
 use Core\DB;
 use \App\Models\Artist;
+use \App\Query;
 
 class Album extends \Core\Model
 {
@@ -47,11 +48,11 @@ class Album extends \Core\Model
         return new Artist($this->artistId);
     }
 
-    public function getSongsId()
+    public function getSongsInfo()
     {
-        $this->db->query("SELECT id FROM songs WHERE album=:album ORDER BY albumOrder ASC");
-        $this->db->bind(':album', $this->id);
-        $data = $this->db->resultSet();
+        $query = new Query;
+        $data = $query->getAlbumSongs($this->id);
+
         $array = array();
         foreach($data as $x => $obj) {
             $song = new Song($obj->id);
@@ -67,12 +68,7 @@ class Album extends \Core\Model
 
     public function getAlbumSongsIds()
     {
-        $this->db->query('SELECT id FROM songs WHERE album = :album ORDER BY albumOrder ASC');
-
-        $this->db->bind(':album', $this->id);
-
-        $result = $this->db->resultset();
-
-        return json_encode($result);
+        $query = new Query;
+        return json_encode($query->getAlbumSongs($this->id));
     }
 }
