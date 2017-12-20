@@ -49,4 +49,10 @@ class Artist extends \Core\Model
         return $array;
 
     }
+
+    public function getArtistSongsIds()
+    {
+        $query = new Query;
+        return json_encode($query->getArtistSongs($this->id));
+    }
 }

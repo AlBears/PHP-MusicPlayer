@@ -26,6 +26,8 @@ class Artists extends \Core\Controller
             'artist' => $artist->getName(),
             'ids' => $query->getRandomSongsIds(),
             'songs' => $artist->getSongsInfo(),
+            'idsAlbum' => $artist->getArtistSongsIds(),
+            'albums' => $query->getArtistAlbums($this->route_params['id'])
         
         ]);
     }

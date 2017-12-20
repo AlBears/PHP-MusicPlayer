@@ -195,10 +195,10 @@ function setTrack(trackId, newPlaylist, play) {
 
 
             var artist = JSON.parse(data);
-            console.log(artist);
             $('.artistName span').text(artist.name);
             $(document).off('click', '.artistName span').on("click", '.artistName span', function(){
                 $("#mainContent").load('/artists/show/'+ artist.id, function(){
+                    tempPlaylist = $('.infoAlbum').data('idsalbum');
                     history.pushState(null, null, '/artists/show/'+ artist.id);
                 });
             });

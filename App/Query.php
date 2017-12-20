@@ -98,5 +98,14 @@ class Query
         return $this->db->resultset();
     }
 
+    public function getArtistAlbums($id)
+    {
+        $this->db->query('SELECT * FROM albums WHERE artist = :artist');
+
+        $this->db->bind(':artist', $id);
+
+        return $this->db->resultSet();
+    }
+
 
 }
