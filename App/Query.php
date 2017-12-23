@@ -107,5 +107,13 @@ class Query
         return $this->db->resultSet();
     }
 
+    public function searchArtistsId($data)
+    {
+        $this->db->query("SELECT id FROM artists WHERE name LIKE '$data%'");
+
+        return $this->db->resultSet();
+
+    }
+
 
 }

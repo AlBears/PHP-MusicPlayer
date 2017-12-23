@@ -6,31 +6,34 @@ Use \App\Query;
 
 class Ajax extends \Core\Controller
 {
+    protected $query;
+
+    public function __construct()
+    {
+        $this->query = new Query;
+    }
+
     public function findSongAction()
     {
-        $query = new Query;
-        $song = $query->getSongById($_POST['songId']);
+        $song = $this->query->getSongById($_POST['songId']);
         echo json_encode($song);
     }
 
     public function findArtistAction()
     {
-        $query = new Query;
-        $artist = $query->getArtistById($_POST['artistId']);
+        $artist = $this->query->getArtistById($_POST['artistId']);
         echo json_encode($artist);
     }
 
     public function findAlbumAction()
     {
-        $query = new Query;
-        $album = $query->getAlbumById($_POST['albumId']);
+        $album = $this->query->getAlbumById($_POST['albumId']);
         echo json_encode($album);
     }
 
     public function updateCountAction()
     {
-        $query = new Query;
-        $query->incrementPlays($_POST['songId']);
+        $this->query->incrementPlays($_POST['songId']);
     }
 
 

@@ -1,0 +1,24 @@
+
+
+<h2>ARTISTS</h2>
+
+{% if artists %} 
+
+    {% for artist in artists %}
+    <div class='searchResultRow'>
+        <div class='artistName'>
+
+            <span role='link' tabindex='0' onclick="output('{{artist.id}}')">
+                {{ artist.name }}
+            </span>
+
+        </div>
+
+    </div>
+    {% endfor %} 
+
+{% else %}
+
+<span class='noResults'>No artists found matching your request</span>
+
+{% endif %}

@@ -59,6 +59,14 @@ $(document).ready(function () {
         
     });
 
+    $(document).on('click', '.navItemLink.search', function(e){
+        e.preventDefault();
+        $("#mainContent").load("/search/index", function() {
+            history.pushState(null, null, '/search');
+        });
+        
+    });
+
     $(document).on('click', '.gridViewItem .gridViewInfo', function(e){
         e.preventDefault();
         loadAlbum.call($(this));
@@ -74,7 +82,44 @@ $(document).ready(function () {
         setTrack(id, tempPlaylist, true);
     });
 
+    $(document).on('click', '.headerButtons .button', function(){
+        playFirstSong();
+    });
+
+    $(".searchInput").focus();
+
+    
+    $(document).on('keyup', ".searchInput", function(e) {
+        setTimeout(function(){
+            search(e)}, 2000);
+    });
+
+   
+
 });
+
+function output(id) {
+    $("#mainContent").load('/artists/show/' + id, function () {
+        tempPlaylist = $('.infoAlbum').data('idsalbum');
+        history.pushState(null, null, '/artists/show/' + id);
+    });
+
+}
+
+function search(e) {
+    e.preventDefault();
+    var val = $('.searchInput').val();
+    if (val) {
+        $.post('/search/execute', {
+            search: val
+        }, function (data) {
+            $('.artistsContainer').html(data);
+        });
+    } else {
+        return;
+    }
+};
+
 
 function timeFromOffset(mouse, progressBar) {
     var percentage, seconds;
@@ -196,11 +241,8 @@ function setTrack(trackId, newPlaylist, play) {
 
             var artist = JSON.parse(data);
             $('.artistName span').text(artist.name);
-            $(document).off('click', '.artistName span').on("click", '.artistName span', function(){
-                $("#mainContent").load('/artists/show/'+ artist.id, function(){
-                    tempPlaylist = $('.infoAlbum').data('idsalbum');
-                    history.pushState(null, null, '/artists/show/'+ artist.id);
-                });
+            $(document).off('click', '.trackInfo .artistName span').on("click", '.trackInfo .artistName span', function(){
+                $("#mainContent").load('/artists/show/'+ artist.id, output(artist.id));
             });
         });
 

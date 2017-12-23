@@ -14,6 +14,7 @@ session_start();
 
 // Add the routes
 $router->add('', ['controller' => 'Home', 'action' => 'index']);
+$router->add('search', ['controller' => 'Search', 'action' => 'index']);
 $router->add('{controller}/{action}');
 $router->add('{controller}/{action}/{id:\d+}');
 
