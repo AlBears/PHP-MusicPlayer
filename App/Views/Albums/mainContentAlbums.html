@@ -1,4 +1,4 @@
-<div class="infoAlbum" data-idsalbum="{{ idsAlbum }}"></div>
+
 
 <div class="entityInfo">
     
@@ -18,18 +18,18 @@
     <div class="tracklistContainer">
         <ul class="tracklist">
     
-            {% for key, value in songs %}
+            {% for key, song in songs %}
     
             <li class='tracklistRow'>
                 <div class='trackCount'>
-                    <img class='play' src='/img/icons/play-white.png' data-songId ="{{ value.id }}">
-                    <span class='trackNumber'>{{ value.key }}</span>
+                    <img class='play' src='/img/icons/play-white.png' onclick="setTrack('{{ song.id }}', JSON.parse('{{idsAlbum}}'), true)">
+                    <span class='trackNumber'>{{ song.key }}</span>
                 </div>
     
     
                 <div class='trackInfo'>
-                    <span class='trackName'>{{ value.name }}</span>
-                    <span class='artistName'>{{ value.artist }}</span>
+                    <span class='trackName'>{{ song.name }}</span>
+                    <span class='artistName'>{{ song.artist }}</span>
                 </div>
     
                 <div class='trackOptions'>
@@ -37,7 +37,7 @@
                 </div>
     
                 <div class='trackDuration'>
-                    <span class='duration'>{{ value.duration }}</span>
+                    <span class='duration'>{{ song.duration }}</span>
                 </div>
             </li>
             {% endfor %}

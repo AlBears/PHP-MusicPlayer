@@ -1,7 +1,6 @@
 $(document).ready(function () {
 
     var newPlaylist = $('.info').data('ids');
-    tempPlaylist = $('.infoAlbum').data('idsalbum');
     audioElement = new Audio();
     setTrack(newPlaylist[0].id, newPlaylist, false);
     updateVolumeProgressBar(audioElement.audio);
@@ -67,40 +66,18 @@ $(document).ready(function () {
         
     });
 
-    $(document).on('click', '.gridViewItem .gridViewInfo', function(e){
-        e.preventDefault();
-        loadAlbum.call($(this));
-    });
-
-    $(document).on('click', '.gridViewItem img', function(e){
-        e.preventDefault();
-        loadAlbum.call($(this));
-    });
-
-    $(document).on('click', ".tracklistRow .trackCount img", function(){
-        var id = $(this).data("songid");
-        setTrack(id, tempPlaylist, true);
-    });
-
-    $(document).on('click', '.headerButtons .button', function(){
-        playFirstSong();
-    });
 
     $(".searchInput").focus();
-
     
     $(document).on('keyup', ".searchInput", function(e) {
         setTimeout(function(){
             search(e)}, 2000);
-    });
-
-   
+    });  
 
 });
 
-function output(id) {
+function artistProfile(id) {
     $("#mainContent").load('/artists/show/' + id, function () {
-        tempPlaylist = $('.infoAlbum').data('idsalbum');
         history.pushState(null, null, '/artists/show/' + id);
     });
 
@@ -113,7 +90,7 @@ function search(e) {
         $.post('/search/execute', {
             search: val
         }, function (data) {
-            $('.artistsContainer').html(data);
+            $('.searchResultsContainer').html(data);
         });
     } else {
         return;
@@ -167,10 +144,9 @@ function setMute() {
     $(".controlButton.volume img").attr("src", "/img/icons/" + imageName);
 }
 
-function loadAlbum (){
-    var id = ($(this).parent().attr('href')).slice(1).split('/')[2];
+function loadAlbum (event, id){
+    event.preventDefault();
     $("#mainContent").load('/albums/show/'+ id, function(){
-        tempPlaylist = $('.infoAlbum').data('idsalbum');
         history.pushState(null, null, '/albums/show/'+ id);
     });  
 };
@@ -240,7 +216,7 @@ function setTrack(trackId, newPlaylist, play) {
 
 
             var artist = JSON.parse(data);
-            $('.artistName span').text(artist.name);
+            $('.trackInfo .artistName span').text(artist.name);
             $(document).off('click', '.trackInfo .artistName span').on("click", '.trackInfo .artistName span', function(){
                 $("#mainContent").load('/artists/show/'+ artist.id, output(artist.id));
             });

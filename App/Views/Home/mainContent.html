@@ -3,9 +3,9 @@
         <div class="gridViewContainer">
             {% for album in albums %}
             <div class="gridViewItem">
-                <a href="/albums/show/{{ album.id }}">
-                    <img src="{{ album.artworkPath }}" alt="">
-                    <div class="gridViewInfo">
+                <a href="/albums/show/{{ album.id }}" >
+                    <img src="{{ album.artworkPath }}" alt="" onclick="loadAlbum(event, '{{ album.id }}')">
+                    <div class="gridViewInfo" onclick="loadAlbum(event, '{{ album.id }}')">
                         {{ album.title }}
                     </div>
                 </a>
