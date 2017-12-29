@@ -123,5 +123,13 @@ class Query
 
     }
 
+    public function searchAlbumsId($data)
+    {
+        $this->db->query("SELECT * FROM albums WHERE title LIKE '$data%' LIMIT 10");
+
+        return $this->db->resultSet();
+
+    }
+
 
 }

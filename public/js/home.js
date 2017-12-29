@@ -218,7 +218,9 @@ function setTrack(trackId, newPlaylist, play) {
             var artist = JSON.parse(data);
             $('.trackInfo .artistName span').text(artist.name);
             $(document).off('click', '.trackInfo .artistName span').on("click", '.trackInfo .artistName span', function(){
-                $("#mainContent").load('/artists/show/'+ artist.id, output(artist.id));
+                $("#mainContent").load('/artists/show/'+ artist.id, function(){
+                    history.pushState(null, null, '/artists/show/'+ artist.id);
+                });
             });
         });
 
