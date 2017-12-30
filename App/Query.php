@@ -117,7 +117,7 @@ class Query
 
     public function searchSongsInfo($data)
     {
-        $this->db->query("SELECT songs.id as id, songs.title as title, songs.duration as duration, artists.name as name FROM songs, artists WHERE songs.artist = artists.id AND songs.title LIKE '$data%' LIMIT 10");
+        $this->db->query("SELECT songs.id as id, songs.title as title, songs.duration as duration, artists.name as artist FROM songs, artists WHERE songs.artist = artists.id AND songs.title LIKE '$data%' LIMIT 10");
 
         return $this->db->resultSet();
 
