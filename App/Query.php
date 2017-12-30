@@ -107,9 +107,17 @@ class Query
         return $this->db->resultSet();
     }
 
-    public function searchArtistsId($data)
+    public function searchArtistsInfo($data)
     {
-        $this->db->query("SELECT id FROM artists WHERE name LIKE '$data%' LIMIT 10");
+        $this->db->query("SELECT * FROM artists WHERE name LIKE '$data%' LIMIT 10");
+
+        return $this->db->resultSet();
+
+    }
+
+    public function searchSongsInfo($data)
+    {
+        $this->db->query("SELECT songs.id as id, songs.title as title, songs.duration as duration, artists.name as name FROM songs, artists WHERE songs.artist = artists.id AND songs.title LIKE '$data%' LIMIT 10");
 
         return $this->db->resultSet();
 
@@ -123,7 +131,7 @@ class Query
 
     }
 
-    public function searchAlbumsId($data)
+    public function searchAlbumsInfo($data)
     {
         $this->db->query("SELECT * FROM albums WHERE title LIKE '$data%' LIMIT 10");
 

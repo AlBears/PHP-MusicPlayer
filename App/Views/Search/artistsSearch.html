@@ -9,7 +9,7 @@
         <li class='tracklistRow'>
             <div class='trackCount'>
                 <img class='play' src='/img/icons/play-white.png' onclick="setTrack('{{ song.id }}', JSON.parse('{{idsAlbum}}'), true)">
-                <span class='trackNumber'>{{ song.number }}</span>
+                <span class='trackNumber'>{{ loop.index }}</span>
             </div>
     
     

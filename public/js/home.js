@@ -121,6 +121,7 @@ function nextSong() {
         playSong();
         return;
     }
+    console.log("NEXT", currentIndex);
 
     if(currentIndex == currentPlaylist.length - 1) {
         currentIndex = 0
@@ -185,6 +186,7 @@ function shuffleArray(a) {
 
 function setTrack(trackId, newPlaylist, play) {
 
+
     if(newPlaylist != currentPlaylist) {
         currentPlaylist = newPlaylist;
         shufflePlaylist = currentPlaylist.slice();
@@ -200,6 +202,7 @@ function setTrack(trackId, newPlaylist, play) {
             id: (trackId).toString()
         });
     }
+    console.log(currentPlaylist, currentIndex, trackId.toString());
 
     pauseSong();
 

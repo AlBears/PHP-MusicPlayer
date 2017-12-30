@@ -28,32 +28,11 @@ class Search extends \Core\Controller
     public function executeAction()
     {
         $query = new Query;
-        $searchSongs = $query->searchSongsId($_POST['search']);
-        $searchArtists = $query->searchArtistsId($_POST['search']);
-    
-
-        $artists = array();
-        foreach ($searchArtists as $x => $obj) {
-            $artist = new Artist($obj->id);
-            $obj->name = $artist->getName();
-            array_push($artists, $obj);
-        }
-        $songs = array();
-        foreach ($searchSongs as $x => $obj) {
-            $song = new Song($obj->id);
-            $obj->title = $song->getTitle();
-            $obj->artist = $song->getArtist()->getName();
-            $obj->duration = $song->getDuration();
-            $obj->number = $x + 1;
-            array_push($songs, $obj);
-        }
-
-            View::renderTemplate('Search/artistsSearch.html', [
-            'artists' => $artists,
-            'songs' => $songs,
+        View::renderTemplate('Search/artistsSearch.html', [
+            'artists' => $query->searchArtistsInfo($_POST['search']),
+            'songs' => $query->searchSongsInfo($_POST['search']),
             'idsAlbum' => json_encode($query->searchSongsId($_POST['search'])),
-            'albums' => $query->searchAlbumsId($_POST['search'])
+            'albums' => $query->searchAlbumsInfo($_POST['search'])
         ]);
-        
     }
 }
